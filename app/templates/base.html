@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/png" href="{{ url_for('static', path='/images/isp21-logo.png') }}">
+  <title>{% block title %}Generador de CV · LAB21 del ISP21{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/app.css') }}">
+</head>
+<body class="min-h-screen">
+  <header class="border-b border-slate-200/80 bg-white">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 sm:px-8">
+      <a href="/" class="flex items-center gap-3" aria-label="Ir al inicio">
+        <img src="{{ url_for('static', path='/images/isp21-logo.png') }}" alt="Logo del ISP21" class="h-12 w-[68px] rounded-lg bg-white object-contain">
+        <span class="hidden h-9 w-px bg-slate-200 sm:block"></span>
+        <span class="hidden sm:block"><span class="block font-display text-sm font-bold tracking-tight text-slate-800">Generador de CV</span><span class="block text-xs text-slate-500">LAB21 · ISP21</span><span class="mt-0.5 block text-[10px] font-medium text-brand-blue">Desarrollo de Software</span></span>
+      </a>
+      <nav class="flex items-center gap-2" aria-label="Navegación principal">
+        <a href="/como-funciona" class="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-brand-blue">Cómo funciona</a>
+        <a href="/cv/nuevo" class="inline-flex items-center gap-2 rounded-xl bg-brand-red px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-100"><span aria-hidden="true">＋</span> Crear un CV</a>
+      </nav>
+    </div>
+  </header>
+  <main class="mx-auto max-w-7xl px-5 py-8 sm:px-8 sm:py-10">{% block content %}{% endblock %}</main>
+  <footer class="mt-12 border-t border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8"><span>LAB21 · ISP21</span><span>Proyecto de exposición · Desarrollo de Software</span></div>
+  </footer>
+</body>
+</html>

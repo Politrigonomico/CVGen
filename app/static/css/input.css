@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@source "../../templates/**/*.html";
+
+@theme {
+  --color-brand-red: #e5303c;
+  --color-brand-blue: #0783bd;
+  --color-brand-cyan: #19afd1;
+  --color-ink: #283544;
+  --font-sans: "Segoe UI", Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Segoe UI", Arial, ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body { @apply bg-slate-50 text-ink antialiased; }
+  input, select, textarea { @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-brand-blue focus:ring-4 focus:ring-sky-100; }
+  textarea { @apply min-h-28 resize-y; }
+  input[type="checkbox"] { @apply h-4 w-4 rounded border-slate-300 text-brand-blue focus:ring-brand-blue; }
+  summary { @apply cursor-pointer list-none; }
+  summary::-webkit-details-marker { display: none; }
+}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Cómo funciona · Generador de CV{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-4xl">
+  <a href="/" class="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-brand-blue">← Inicio</a>
+  <section class="mt-5 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-9">
+    <p class="text-xs font-bold uppercase tracking-[.15em] text-brand-blue">Recorrido del programa</p>
+    <h1 class="mt-2 font-display text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Del formulario al PDF.</h1>
+    <p class="mt-3 max-w-2xl text-sm leading-7 text-slate-600">Cada parte cumple una tarea: la página recibe los datos, FastAPI los valida, SQLite los guarda y ReportLab prepara el currículum para descargar.</p>
+    <div class="mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600" aria-label="Flujo de datos">
+      <span class="rounded-full bg-sky-50 px-3 py-2 text-brand-blue">Formulario</span><span aria-hidden="true">→</span>
+      <span class="rounded-full bg-sky-50 px-3 py-2 text-brand-blue">FastAPI</span><span aria-hidden="true">→</span>
+      <span class="rounded-full bg-sky-50 px-3 py-2 text-brand-blue">SQLite</span><span aria-hidden="true">→</span>
+      <span class="rounded-full bg-sky-50 px-3 py-2 text-brand-blue">PDF</span>
+    </div>
+  </section>
+
+  <section class="mt-8 space-y-4" aria-label="Código explicado">
+    {% for section in sections %}
+    <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div class="p-5 sm:p-6">
+        <div class="flex items-start gap-3">
+          <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sm font-bold text-brand-blue">{{ section.step }}</span>
+          <div><h2 class="font-display text-lg font-bold text-slate-900">{{ section.title }}</h2><p class="mt-1 text-sm leading-6 text-slate-600">{{ section.description }}</p></div>
+        </div>
+        <details class="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-slate-950" {% if loop.first %}open{% endif %}>
+          <summary class="cursor-pointer px-4 py-3 text-xs font-semibold text-sky-100 hover:bg-white/5">Ver código <span class="ml-1 font-normal text-slate-400">{{ section.file }}</span></summary>
+          <pre class="max-h-96 overflow-auto border-t border-white/10 p-4 text-[11px] leading-5 text-slate-100"><code>{{ section.code }}</code></pre>
+        </details>
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+
+  <p class="mt-5 text-center text-xs text-slate-400">Los bloques de Python muestran código del proyecto en modo de solo lectura; el ejemplo HTML resume la estructura del formulario.</p>
+
+  <section class="mt-8 flex flex-col items-center gap-5 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm sm:flex-row sm:text-left">
+    <img src="/static/images/cvgen-source-qr.png" alt="Código QR para descargar CVGen" class="h-28 w-28 rounded-lg border border-slate-200 p-1">
+    <div>
+      <h2 class="font-display text-lg font-bold text-slate-900">El proyecto es de código abierto</h2>
+      <p class="mt-1 text-sm leading-6 text-slate-600">Descargá el código y probá el generador en tu computadora.</p>
+      <a href="{{ source_archive_url }}" class="mt-3 inline-flex rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-semibold text-white hover:bg-sky-800">Descargar el proyecto</a>
+      <a href="{{ source_repository_url }}" target="_blank" rel="noopener noreferrer" class="ml-2 inline-flex px-2 py-2.5 text-sm font-semibold text-brand-blue hover:underline">Ver repositorio</a>
+    </div>
+  </section>
+</div>
+{% endblock %}
