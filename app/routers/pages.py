@@ -11,6 +11,7 @@ from ..database import connect, init_db
 from ..pdf import generate_pdf
 from ..services.curriculums import (
     create_cv,
+    delete_cv,
     parse_form_fields,
     update_cv,
     validate_form,
@@ -23,7 +24,11 @@ templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 
 
 @router.get("/", response_class=HTMLResponse)
-async def home(request: Request, q: str = Query(default="", max_length=100)):
+async def home(
+    request: Request,
+    q: str = Query(default="", max_length=100),
+    eliminado: bool = False,
+):
     with connect() as db:
         if q.strip():
             needle = f"%{q.strip()}%"
@@ -50,6 +55,7 @@ async def home(request: Request, q: str = Query(default="", max_length=100)):
             "total": total,
             "today": today,
             "q": q,
+            "deleted": eliminado,
             "source_archive_url": SOURCE_ARCHIVE_URL,
             "source_repository_url": SOURCE_REPOSITORY_URL,
         },
@@ -100,6 +106,13 @@ async def how_it_works(request: Request):
             "file": "app/services/curriculums.py · parse_form_fields() y validate_form()",
             "description": "La lógica queda separada de las rutas web: una función normaliza los textos y otra valida antes de crear o actualizar el CV.",
             "code": f"{inspect.getsource(parse_form_fields).strip()}\n\n{inspect.getsource(validate_form).strip()}\n\n{inspect.getsource(create_cv).strip()}",
+        },
+        {
+            "step": "07",
+            "title": "La eliminación requiere confirmación",
+            "file": "app/services/curriculums.py · delete_cv()",
+            "description": "El botón abre una confirmación y recién al aceptar se borra el registro y se limpian los archivos asociados.",
+            "code": inspect.getsource(delete_cv).strip(),
         },
     ]
     return templates.TemplateResponse(

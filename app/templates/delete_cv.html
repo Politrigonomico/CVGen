@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Eliminar CV · LAB21{% endblock %}
+{% block content %}
+<section class="mx-auto mt-10 max-w-xl rounded-3xl border border-red-100 bg-white p-7 shadow-sm sm:p-9">
+  <p class="text-xs font-bold uppercase tracking-[.15em] text-red-700">Confirmación</p>
+  <h1 class="mt-2 font-display text-2xl font-extrabold text-slate-900">¿Eliminar este CV?</h1>
+  <p class="mt-3 text-sm leading-6 text-slate-600">Vas a eliminar el currículum de <strong class="text-slate-800">{{ person.nombre }} {{ person.apellido }}</strong> y sus archivos guardados. Esta acción no se puede deshacer.</p>
+  <div class="mt-6 flex flex-wrap gap-3">
+    <a href="/cv/{{ person.id }}" class="inline-flex items-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Cancelar</a>
+    <form action="/cv/{{ person.id }}/eliminar" method="post">
+      <button type="submit" class="inline-flex items-center rounded-xl bg-red-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-800">Sí, eliminar CV</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

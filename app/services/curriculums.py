@@ -158,6 +158,19 @@ def update_cv(cv_id: int, form: dict, photo_bytes: bytes) -> dict:
     return updated_person
 
 
+def delete_cv(cv_id: int) -> None:
+    """Delete a CV record and its generated PDF and uploaded photo, if present."""
+    person = get_cv(cv_id)
+    with connect() as db:
+        db.execute("DELETE FROM curriculums WHERE id = ?", (cv_id,))
+
+    photo_path = Path(person.get("foto_path", ""))
+    if photo_path.is_file() and photo_path.parent.resolve() == PHOTO_DIR.resolve():
+        photo_path.unlink(missing_ok=True)
+
+    (GENERATED_CVS_DIR / f"cv_{cv_id}.pdf").unlink(missing_ok=True)
+
+
 def pdf_path_for(cv_id: int) -> Path:
     person = get_cv(cv_id)
     return write_pdf(person)

@@ -11,6 +11,7 @@ from ..config import PHOTO_DIR, TEMPLATES_DIR
 from ..services.curriculums import (
     EDUCATION_LEVELS,
     create_cv,
+    delete_cv,
     get_cv,
     parse_form_fields,
     update_cv,
@@ -117,6 +118,21 @@ async def download_pdf(cv_id: int):
     path = write_pdf(person)
     filename = re.sub(r"[^\w-]+", "_", f"CV_{person['nombre']}_{person['apellido']}", flags=re.UNICODE)
     return FileResponse(path, media_type="application/pdf", filename=f"{filename}.pdf")
+
+
+@router.get("/cv/{cv_id}/eliminar", response_class=HTMLResponse)
+async def confirm_delete_cv(request: Request, cv_id: int):
+    return templates.TemplateResponse(
+        request=request,
+        name="delete_cv.html",
+        context={"person": get_cv(cv_id)},
+    )
+
+
+@router.post("/cv/{cv_id}/eliminar")
+async def delete_cv_route(cv_id: int):
+    delete_cv(cv_id)
+    return RedirectResponse(url="/?eliminado=1", status_code=303)
 
 
 @router.get("/cv/{cv_id}", response_class=HTMLResponse)
